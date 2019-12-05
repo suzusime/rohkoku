@@ -77,7 +77,7 @@ class Clock
     @news_text="ここにニュースが入る"
     load_news
     load_kisyo
-    @asciifont = SDL2::TTF.open("ShareTechMono-Regular.ttf", 96)
+    #@asciifont = SDL2::TTF.open("ShareTechMono-Regular.ttf", 96)
     @was_news_updated=false
     @was_news_reloaded=false
     @was_kisyo_updated=false

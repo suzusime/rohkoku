@@ -14,8 +14,8 @@ Ruby（2.6.5で動作確認しています）と、Rubyのgemの
 起動は
 
 ```sh
-$ ruby get_news.rb
-$ ruby tenki.rb
+$ ruby get_news.rb > news_list.txt # 初回のみ
+$ ruby tenki.rb # 初回のみ
 $ sh ./start.sh
 ```
 
