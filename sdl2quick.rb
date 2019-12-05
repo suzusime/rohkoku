@@ -16,7 +16,7 @@ module SDL2::Q
     @@window = SDL2::Window.create(title,
                                    SDL2::Window::POS_CENTERED,
                                    SDL2::Window::POS_CENTERED,
-                                   640, 480, 0)
+                                   480, 320, 0)
     @@renderer = @@window.create_renderer(-1, 0)
     @@fpskeeper = FPSKeeper.new(30)
     
@@ -45,7 +45,7 @@ module SDL2::Q
     clear_window
   end
 
-  FONT_PATH = File.join(__dir__, "VL-Gothic-Regular.ttf")
+  FONT_PATH = File.join(__dir__, "GenRyuMinJP-Heavy.ttf")
   private_constant :FONT_PATH
 
   # @!group Main Loop
@@ -332,9 +332,12 @@ module SDL2::Q
   # @param x [Integer] 描画文字列の左上X座標
   # @param y [Integer] 描画文字列の左上Y座標
   # @param color [Array<Integer>] 描画色
+  # @param font [SDL2::TTF] 描画フォント
   # @return [void]
-  def text(str, x: 0, y: 0, color: WHITE)
-    surface = @@font.render_solid(str, color)
+  def text(str, x: 0, y: 0, color: WHITE, font: @@font)
+    #surface = font.render_solid(str, color)
+    surface = font.render_blended(str, color) # 綺麗な描画をする
+    #surface = font.render_shaded(str, color, BLACK)
     texture = @@renderer.create_texture_from(surface)
     @@renderer.copy(texture, nil,
                     SDL2::Rect.new(x, y, texture.w, texture.h)) 
@@ -348,6 +351,11 @@ module SDL2::Q
     @@font = @@fonts.fetch(size) {
       @@fonts[size] = SDL2::TTF.open(FONT_PATH, size)
     }
+  end
+  
+  # 今のフォントでテキストを描画したときの枠の大きさを取得
+  def get_size_text(text)
+    return @@font.size_text(text)
   end
 
   WHITE = [255, 255, 255]
